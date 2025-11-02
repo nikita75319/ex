@@ -1,35 +1,36 @@
-message MakeNewUser {
+message(0xdc6a8b83) MakeNewUser {
     name: String;
+    id: Int;
+}
+
+message(0x7f22ed74) ChangeUserData {
+    name: String;
+    id: Int;
     deliveryAddress: String;
 }
 
-message ChangeUserData {
-    name: String;
-    deliveryAddress: String;
-}
-
-message CreateShop {
+message(0xc6366b42) CreateShop {
     shopName: String;
 }
 
-message AddItem {
+message(0xfe3511b0) AddItem {
     isUnique: Bool;
     content: String;
     price: Int as coins;
 }
 
-message NftTransfer {
+message(0xd9f8bfac) NftTransfer {
     newOwner: Address;
     isSalable: Bool;
 }
 
-message NftTransferNotification {
+message(0x591763ee) NftTransferNotification {
     itemIndex: Int;
     oldOwner: Address;
     newOwner: Address;
 }
 
-message CreateOrder {
+message(0x7ac14988) CreateOrder {
     itemAddress: Address;
     deliveryAddress: String;
     price: Int as coins;
@@ -43,19 +44,19 @@ message CreateOrder {
 //     isSalable: Bool;
 // }
 
-message SetPrice {
+message(0x9b6fea82) SetPrice {
     newPrice: Int as coins;
     isSalable: Bool;
 }
 
-message SetUniqueItemPrice {
+message(0xc46fecd7) SetUniqueItemPrice {
     uniqueItem: Address;
     newPrice: Int as coins;
 }
 
-message GetPrice {}
+message(0xfdc52c75) GetPrice {}
 
-message GetPriceResponse {
+message(0x7c95a1fc) GetPriceResponse {
     price: Int as coins;
 }
 
@@ -65,21 +66,28 @@ message GetPriceResponse {
 //     buyer: Address;
 // }
 
-message NftTransferSuccess {}
+message(0xe6e77cc0) NftTransferSuccess {}
 
-message OrderCompleted {
+message(0x993e1ed5) OrderCompleted {
     orderIndex: Int;
     itemAddress: Address;
     buyer: Address;
 }
 
-message MakeOrder {
+message(0x75bc02e6) MakeOrder {
     itemAddress: Address;
     price: Int as coins;
 }
 
-message NewOrder {
+message(0x90268e31) NewOrder {
     deliveryAddress: String;
     itemIndex: Int as uint256;
     price: Int as coins;
+}
+
+message UpdateShopInfo {
+    shopName: String;
+    shopId: Int as uint256;
+    uniqueItemsCount: Int as uint256;
+    ordersCount: Int as uint256;
 }

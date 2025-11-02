@@ -3,7 +3,8 @@ import { ShopFactory } from '../build/ShopFactory/ShopFactory_ShopFactory';
 import { NetworkProvider } from '@ton/blueprint';
 
 export async function run(provider: NetworkProvider) {
-    const shopFactory = provider.open(await ShopFactory.fromInit());
+    const sender = provider.sender();
+    const shopFactory = provider.open(await ShopFactory.fromInit(sender.address!));
 
     await shopFactory.send(
         provider.sender(),

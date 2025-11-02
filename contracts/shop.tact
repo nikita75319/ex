@@ -4,21 +4,26 @@ import "./unique_item";
 import "./order";
 
 contract Shop with Ownable {
-    parent: Address;
     owner: Address;
-    shopName: String;
+    name: String;
     uniqueItemsCount: Int as uint256;
     shopId: Int as uint256;
     ordersCount: Int as uint256;
     balance: Int as coins = 0;
 
-    init(parent: Address, owner: Address, shopName: String, shopId: Int) {
-        self.parent = parent;
+    init(owner: Address) {
         self.owner = owner;
-        self.shopName = shopName;
-        self.shopId = shopId;
+        self.name = "shopName";
+        self.shopId = 1;
         self.uniqueItemsCount = 0;
         self.ordersCount = 0;
+    }
+
+    receive(msg: UpdateShopInfo) {
+        self.name = msg.shopName;
+        self.shopId = msg.shopId;
+        self.uniqueItemsCount = msg.uniqueItemsCount;
+        self.ordersCount = msg.ordersCount;
     }
 
     receive(msg: AddItem) {
@@ -59,16 +64,10 @@ contract Shop with Ownable {
 
         send(SendParameters {
             to: contractAddress(init),
-            value: ton("0.2"),
+            value: msg.price,
+            mode: SendIgnoreErrors,
             code: init.code,
             data: init.data,
-            body: "onDeploy".asComment(),
-        });
-
-        send(SendParameters {
-            to: msg.itemAddress,
-            value: ton("0.2"),
-            body: NftTransfer { newOwner: contractAddress(init), isSalable: true }.toCell(),
         });
 
         self.ordersCount += 1;
@@ -97,7 +96,7 @@ contract Shop with Ownable {
     }
 
     get fun shopName(): String {
-        return self.shopName;
+        return self.name;
     }
 
     get fun uniqueItemInit(owner: Address, index: Int): StateInit {

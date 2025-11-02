@@ -3,10 +3,11 @@ import { UsersFactory } from '../build/UsersFactory/UsersFactory_UsersFactory';
 import { NetworkProvider } from '@ton/blueprint';
 
 export async function run(provider: NetworkProvider) {
-    const usersFactory = provider.open(await UsersFactory.fromInit());
+    const sender = provider.sender();
+    const usersFactory = provider.open(await UsersFactory.fromInit(sender.address!));
 
     await usersFactory.send(
-        provider.sender(),
+        sender,
         {
             value: toNano('0.05'),
         },

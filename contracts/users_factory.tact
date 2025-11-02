@@ -2,7 +2,7 @@ import "./messages";
 import "./user";
 import "@stdlib/deploy";
 
-contract UsersFactory with Deployable {
+contract UsersFactory {
     owner: Address;
     quantityOfUsers: Int as uint256;
 
@@ -12,16 +12,12 @@ contract UsersFactory with Deployable {
     }
 
     receive(msg: MakeNewUser) {
-        let init: StateInit = initOf User(myAddress(), self.quantityOfUsers);
+        let init: StateInit = initOf User(myAddress());
 
         send(SendParameters {
             bounce: false,
             to: contractAddress(init),
             value: ton("0.2"),
-            body: ChangeUserData {
-                name: msg.name,
-                deliveryAddress: msg.deliveryAddress,
-            }.toCell(),
             mode: SendIgnoreErrors,
             code: init.code,
             data: init.data,
@@ -29,11 +25,15 @@ contract UsersFactory with Deployable {
         self.quantityOfUsers += 1;
     }
 
+    receive() {
+        cashback(sender());
+    }
+
     get fun cntUsers(): Int {
         return self.quantityOfUsers;
     }
 
-    get fun userAddress(id: Int): Address {
-        return contractAddress(initOf User(myAddress(), id));
+    get fun userAddress(parent: Address): Address {
+        return contractAddress(initOf User(parent));
     }
 }

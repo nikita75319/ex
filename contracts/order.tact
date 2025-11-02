@@ -20,14 +20,6 @@ contract Order {
         // self.items = items;
     }
 
-    receive("onDeploy") {
-        send(SendParameters {
-            to: self.itemAddress,
-            value: ton("0.2"),
-            body: GetPrice {}.toCell(),
-        });
-    }
-
     receive() {
         cashback(sender());
     }

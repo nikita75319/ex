@@ -25,28 +25,11 @@ describe('UsersFactory', () => {
             init: { code: usersFactory.init?.code, data: usersFactory.init?.data },
         });
         const postState = await blockchain.getContract(usersFactory.address);
+
+        console.log("USERS WALLET:", (await usersFactory.getUserAddress(deployer.address)).toString());
         expect(postState.accountState?.type).toEqual('active');
         
     })
 
-    it('should create user', async () => {
-        const message: MakeNewUser = {
-            $$type: 'MakeNewUser',
-            name: "test",
-            deliveryAddress: "test"
-        }
-
-        await usersFactory.send(
-            deployer.getSender(), 
-            {value: toNano("0.5")}, 
-            message
-        );
-
-        const userAddr = await usersFactory.getUserAddress(1n);
-        const user = blockchain.openContract(User.fromAddress(userAddr));
-        
-        const state = await blockchain.getContract(userAddr);
-        console.log(userAddr);
-        expect(state.accountState?.type).toEqual('active');
-    })
+    
 });

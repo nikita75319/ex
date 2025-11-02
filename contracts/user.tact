@@ -7,9 +7,9 @@ contract User with Deployable {
     name: String;
     deliveryAddress: String;
 
-    init(parent: Address, id: Int) {
+    init(parent: Address) {
         self.parent = parent;
-        self.id = id;
+        self.id = 1;
         self.name = "";
         self.deliveryAddress = "";
     }
@@ -17,6 +17,21 @@ contract User with Deployable {
     receive(msg: ChangeUserData) {
         require(sender() == self.parent, "Only parent can change user data");
         self.name = msg.name;
+        self.id = msg.id;
         self.deliveryAddress = msg.deliveryAddress;
+    }
+
+    receive(msg: MakeOrder) {
+        send(SendParameters {
+            to: msg.itemAddress,
+            value: msg.price,
+            body: CreateOrder {
+                itemAddress: msg.itemAddress,
+                deliveryAddress: self.deliveryAddress,
+                price: msg.price,
+            }.toCell(),
+            mode: SendIgnoreErrors
+        });
+        
     }
 }
