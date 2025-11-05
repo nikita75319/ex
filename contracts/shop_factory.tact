@@ -17,7 +17,7 @@ contract ShopFactory with Ownable {
     receive() {}
 
     receive(msg: CreateShop) {
-        let init: StateInit = initOf Shop(myAddress(), sender(), msg.shopName, self.shopsCount);
+        let init: StateInit = initOf Shop(sender());
 
         send(SendParameters {
             to: contractAddress(init),

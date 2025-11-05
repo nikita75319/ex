@@ -14,9 +14,10 @@ message(0xc6366b42) CreateShop {
 }
 
 message(0xfe3511b0) AddItem {
-    isUnique: Bool;
-    content: String;
     price: Int as coins;
+    imageSrc: String;
+    title: String;
+    description: String;
 }
 
 message(0xd9f8bfac) NftTransfer {
@@ -24,25 +25,12 @@ message(0xd9f8bfac) NftTransfer {
     isSalable: Bool;
 }
 
-message(0x591763ee) NftTransferNotification {
-    itemIndex: Int;
-    oldOwner: Address;
-    newOwner: Address;
-}
-
 message(0x7ac14988) CreateOrder {
+    orderId: Int;
     itemAddress: Address;
-    deliveryAddress: String;
     price: Int as coins;
+    deliveryAddress: String;
 }
-
-// message SetNewPrice {
-//     newPrice: Int as coins;
-// }
-
-// message SetSalable {
-//     isSalable: Bool;
-// }
 
 message(0x9b6fea82) SetPrice {
     newPrice: Int as coins;
@@ -60,20 +48,6 @@ message(0x7c95a1fc) GetPriceResponse {
     price: Int as coins;
 }
 
-// message OrderPayment {
-//     orderIndex: Int;
-//     itemAddress: Address;
-//     buyer: Address;
-// }
-
-message(0xe6e77cc0) NftTransferSuccess {}
-
-message(0x993e1ed5) OrderCompleted {
-    orderIndex: Int;
-    itemAddress: Address;
-    buyer: Address;
-}
-
 message(0x75bc02e6) MakeOrder {
     itemAddress: Address;
     price: Int as coins;
@@ -88,6 +62,6 @@ message(0x90268e31) NewOrder {
 message UpdateShopInfo {
     shopName: String;
     shopId: Int as uint256;
-    uniqueItemsCount: Int as uint256;
-    ordersCount: Int as uint256;
 }
+
+message OrderCompleted {}
