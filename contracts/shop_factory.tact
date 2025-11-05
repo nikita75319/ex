@@ -37,7 +37,7 @@ contract ShopFactory with Ownable {
     }
 
     get fun shopAddress(index: Int, owner: Address, shopName: String): Address {
-        let init: StateInit = initOf Shop(myAddress(), owner, shopName, index);
+        let init: StateInit = initOf Shop(sender());
         return contractAddress(init);
     }
 

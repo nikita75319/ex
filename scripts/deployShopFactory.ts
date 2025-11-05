@@ -1,5 +1,5 @@
 import { toNano } from '@ton/core';
-import { ShopFactory } from '../build/ShopFactory/ShopFactory_ShopFactory';
+import { ShopFactory } from '../build/ShopFactory/tact_ShopFactory';
 import { NetworkProvider } from '@ton/blueprint';
 
 export async function run(provider: NetworkProvider) {

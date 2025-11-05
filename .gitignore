@@ -4,6 +4,7 @@ build
 dist
 .DS_Store
 package.ts
+wrappers
 
 # VS Code
 .vscode/*

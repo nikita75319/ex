@@ -1,5 +1,5 @@
 import { toNano } from '@ton/core';
-import { UsersFactory } from '../build/UsersFactory/UsersFactory_UsersFactory';
+import { UsersFactory } from '../build/UsersFactory/tact_UsersFactory';
 import { NetworkProvider } from '@ton/blueprint';
 
 export async function run(provider: NetworkProvider) {
